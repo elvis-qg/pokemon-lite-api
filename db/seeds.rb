@@ -6,13 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# Pokemon.create!(name: 'Bulbasaur', base_experience: 0, main_type: 'Plant', main_ability: 'Leaves')
-# Trainer.create!(name: 'Hash Ketchup', gender: 'Male', age: 15, home_region: 'Pallet Town', status_active: true, wins: 30, losses: 4)
-# Team.create!(trainer_id: 1, pokemon_id: 1)
-
 require 'csv'
-require 'pg'
-# insert_data - pokemon table
+
 def insert_data
   conn = PG.connect( dbname: 'pokemon_lite_api_development' )
   
@@ -36,18 +31,12 @@ def insert_data
     t = Trainer.create!(trainer)
     p = Pokemon.create!(pokemon)
 
-    # p p.id
-    # p t.id
-
     team = {
       trainer_id: t.id,
       pokemon_id: p.id,
     }
 
-    # p trainer
-    # p pokemon
     Team.create!(team)
-    # p team
   end
 end
 
