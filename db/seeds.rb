@@ -28,20 +28,9 @@ def insert_data
       main_ability: row['main_ability'],
     }
 
-    t = Trainer.new(trainer)
-    p = Pokemon.new(pokemon)
-
-    t.save if t.valid?
-    p.save if p.valid?
-
-    if t.valid? && p.valid?
-      Team.create!({ trainer_id: t.id, pokemon_id: p.id })
-    end
-
-    # team = {
-    #   trainer_id: t.id,
-    #   pokemon_id: p.id,
-    # }
+    t = Trainer.find_or_create_by!(trainer)
+    p = Pokemon.find_or_create_by!(pokemon)
+    Team.create!({ trainer_id: t.id, pokemon_id: p.id })
   end
 end
 
