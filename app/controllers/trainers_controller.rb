@@ -44,7 +44,13 @@ class TrainersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trainer
-      @trainer = Trainer.find(params[:id])
+      if !params[:pokemon_id]
+        @trainer = Trainer.find(params[:id])
+      else  
+        @trainer = Pokemon.find(params[:pokemon_id]).trainers.find_by_id(params[:id])
+        @trainer = [] if !@trainer
+      end
+      
     end
 
     # Only allow a trusted parameter "white list" through.
