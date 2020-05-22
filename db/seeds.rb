@@ -28,17 +28,21 @@ def insert_data
       main_ability: row['main_ability'],
     }
 
-    t = Trainer.create!(trainer)
-    p = Pokemon.create!(pokemon)
+    t = Trainer.new(trainer)
+    p = Pokemon.new(pokemon)
 
-    team = {
-      trainer_id: t.id,
-      pokemon_id: p.id,
-    }
+    t.save if t.valid?
+    p.save if p.valid?
 
-    Team.create!(team)
+    if t.valid? && p.valid?
+      Team.create!({ trainer_id: t.id, pokemon_id: p.id })
+    end
+
+    # team = {
+    #   trainer_id: t.id,
+    #   pokemon_id: p.id,
+    # }
   end
 end
 
-# fields_pokemon = ["name", "base_exp", "main_type", "main_ability"]
 insert_data
