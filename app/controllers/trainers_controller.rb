@@ -3,12 +3,15 @@ class TrainersController < ApplicationController
 
   # GET /trainers
   def index
-    @trainers = Trainer.all
-
+    if !params[:pokemon_id]
+      @trainers = Trainer.all
+    else
+      @trainers = Pokemon.joins(:trainers).where(:trainers.id: params[:pokemon_id])
+    end  
     render json: @trainers
   end
 
-  # GET /trainers/1
+  # GET trainers/1
   def show
     render json: @trainer
   end

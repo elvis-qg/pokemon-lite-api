@@ -3,8 +3,12 @@ class PokemonsController < ApplicationController
 
   # GET /pokemons
   def index
-    @pokemons = Pokemon.all
-
+    if !params[:trainer_id]
+      @pokemons = Pokemon.all
+    else 
+      p params
+      @pokemons = Trainer.joins(:pokemons).where(id: params[:trainer_id])
+    end  
     render json: @pokemons
   end
 
