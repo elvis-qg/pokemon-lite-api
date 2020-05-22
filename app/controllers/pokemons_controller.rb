@@ -6,8 +6,7 @@ class PokemonsController < ApplicationController
     if !params[:trainer_id]
       @pokemons = Pokemon.all
     else 
-      p params
-      @pokemons = Trainer.joins(:pokemons).where(id: params[:trainer_id])
+      @pokemons = Trainer.find(params[:trainer_id]).pokemons
     end  
     render json: @pokemons
   end
