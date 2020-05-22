@@ -11,7 +11,7 @@ class PokemonsController < ApplicationController
     render json: @pokemons
   end
 
-  # GET /pokemons/1
+  # GET pokemons/1
   def show
     render json: @pokemon
   end
@@ -44,7 +44,12 @@ class PokemonsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pokemon
-      @pokemon = Pokemon.find(params[:id])
+      if !params[:trainer_id]
+        @pokemon = Pokemon.find(params[:id])
+      else  
+        @pokemon = Trainer.find(params[:trainer_id]).pokemons.find_by_id(params[:id])
+        @pokemon = [] if !@pokemon
+      end  
     end
 
     # Only allow a trusted parameter "white list" through.
